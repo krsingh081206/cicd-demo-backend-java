@@ -1,0 +1,22 @@
+apiVersion: v1
+
+kind: Service
+
+metadata:
+  name: springboot-service
+  namespace: dev
+  annotations:
+    cloud.google.com/neg: '{"exposed_ports": {"8080":{"name": "dev-springboot-service-8080-neg"}}}'
+  labels:
+    app: springboot-service
+  
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: springboot-pod
+status:
+  loadBalancer: {}
