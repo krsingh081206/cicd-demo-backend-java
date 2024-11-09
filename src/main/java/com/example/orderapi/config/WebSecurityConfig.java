@@ -19,6 +19,7 @@ public class WebSecurityConfig {
         http.cors().and()
                 .csrf().disable() // Disable CSRF protection for testing
                 .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers(new AntPathRequestMatcher("/actuator/health")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/orders/**")).authenticated()
                         .anyRequest().authenticated()) // Allow only authenicated requests
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
