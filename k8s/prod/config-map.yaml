@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata: 
+  name: springboot-backend-config
+  namespace: production
+data:
+  OKTA_TOKEN_ISSUER : 'https://dev-68606227.okta.com/oauth2/default'
+
