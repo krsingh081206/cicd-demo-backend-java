@@ -35,6 +35,7 @@ public class OrderController {
     @PostMapping
     @CrossOrigin
     public Order createOrder(@RequestBody Order order) {
+        System.out.println("Hello OrderService");
         return orderService.save(order);
     }
 
