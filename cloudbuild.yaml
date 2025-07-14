@@ -3,8 +3,7 @@ options:
 
 substitutions:
   _IMAGE: order-api
-  _SERVICE_NAME: order-service
-
+  
 steps:
   # Step 1: Build Docker image from Dockerfile
   - name: gcr.io/cloud-builders/docker
@@ -21,19 +20,6 @@ steps:
     args:
       - push
       - us-east4-docker.pkg.dev/$PROJECT_ID/techgig-cicd/$_IMAGE:$SHORT_SHA
-
-  # Step 3: Deploy image to Cloud Run
-  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
-    id: Deploy
-    entrypoint: gcloud
-    args:
-      - run
-      - deploy
-      - $_SERVICE_NAME
-      - --image=us-east4-docker.pkg.dev/$PROJECT_ID/techgig-cicd/$_IMAGE:$SHORT_SHA
-      - --region=us-east4
-      - --platform=managed
-      - --allow-unauthenticated
 
 images:
   - us-east4-docker.pkg.dev/$PROJECT_ID/techgig-cicd/$_IMAGE:$SHORT_SHA
