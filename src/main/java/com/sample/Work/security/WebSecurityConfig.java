@@ -182,16 +182,18 @@ public class WebSecurityConfig {
 	}
 	
 	@Bean
-	public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
-	    org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
-	    configuration.setAllowedOrigins(List.of("http://localhost:4200","https://frontend-service-72836785242.us-east4.run.app")); // Angular app origin
-	    configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-	    configuration.setAllowedHeaders(List.of("*"));
-	    configuration.setAllowCredentials(true); // needed if you're sending cookies or Authorization header
+public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
+    org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
+    
+    configuration.setAllowedOriginPatterns(List.of("*")); // Allows all origins
+    configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // All HTTP methods
+    configuration.setAllowedHeaders(List.of("*")); // All headers
+    configuration.setAllowCredentials(false); // Credentials not allowed when allowing all origins (*)
 
-	    org.springframework.web.cors.UrlBasedCorsConfigurationSource source = new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
-	    source.registerCorsConfiguration("/**", configuration);
-	    return source;
-	}
+    org.springframework.web.cors.UrlBasedCorsConfigurationSource source = new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
+}
+
 
 	}
