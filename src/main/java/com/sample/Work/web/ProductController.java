@@ -92,7 +92,7 @@ public class ProductController {
 	}
 
 	
-	@GetMapping("/product/search")
+	@PostMapping("/product/search")
 	@PreAuthorize("hasRole('USER','SELLER)")
 	public ResponseEntity<ApiResponse<?>> searchProduct(@RequestParam(required = true) String category,
 	        @RequestParam(required = true) Long minPrice,
