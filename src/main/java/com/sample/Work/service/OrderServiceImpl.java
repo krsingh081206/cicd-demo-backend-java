@@ -212,4 +212,30 @@ public class OrderServiceImpl implements OrderService {
         logger.trace("Exiting displayOrderHistoryUser()");
         return history;
     }
+    
+	@Override
+	public OrderResponseDetailDTO displayOrderDetailsUser(Long orderId) {
+		logger.trace("Entered displayOrderDetailsUser()");
+		
+		OrderEntity order = orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Could not find order details"));
+		OrderResponseDetailDTO response = new OrderResponseDetailDTO();
+		response.setBillNo(order.getBillNo());
+		response.setCreatedAt(order.getCreatedAt());
+		response.setDelivered(order.isDelivered());
+		response.setOrderId(orderId);
+		response.setPaymentType(order.getPaymentType());
+		response.setProducts(order.getProducts()
+								  .stream()
+
+			.map(rel -> new ProductResponseDetailsDTO(
+			    rel.getProduct().getProductId(),
+			    rel.getProduct().getProductName(),
+			    rel.getProduct().getCategory(),
+			    rel.getProduct().getPrice(),
+			    rel.getQuantity()))
+			
+			.collect(Collectors.toList()));
+					return response;
+				}
+
 }
