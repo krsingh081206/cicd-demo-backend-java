@@ -6,6 +6,7 @@ import com.sample.Work.model.OrderEntity;
 import com.sample.Work.payload.AddProductToOrderRequestDTO;
 import com.sample.Work.payload.DeleteOrderRequestDTO;
 import com.sample.Work.payload.OrderResponseDTO;
+import com.sample.Work.payload.OrderResponseDetailDTO;
 import com.sample.Work.payload.RemoveProductToOrderRequestDTO;
 import com.sample.Work.payload.UpdateProductInOrderRequestDTO;
 
@@ -18,5 +19,5 @@ public interface OrderService {
 		public List<OrderResponseDTO> displayAllOrderAdmin();
 		public List<OrderResponseDTO> displayOrderHistoryUser();
 		public OrderResponseDetailDTO displayOrderDetailsUser(Long orderId);
-}
 
+}
