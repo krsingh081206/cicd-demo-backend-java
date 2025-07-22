@@ -17,5 +17,6 @@ public interface OrderService {
 		public OrderResponseDTO deleteOrder(DeleteOrderRequestDTO request);
 		public List<OrderResponseDTO> displayAllOrderAdmin();
 		public List<OrderResponseDTO> displayOrderHistoryUser();
+		public OrderResponseDetailDTO displayOrderDetailsUser(Long orderId);
 }
 
