@@ -1,4 +1,9 @@
 package com.sample.Work.security;
+import java.util.List;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,13 +27,6 @@ import com.sample.Work.repository.UserRepository;
 import com.sample.Work.security.jwt.AuthEntryPointJwt;
 import com.sample.Work.security.jwt.AuthTokenFilter;
 import com.sample.Work.security.service.UserDetailsServiceImpl;
-
-
-import java.util.Set;
-
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 
 
 @Configuration
@@ -69,7 +67,10 @@ public class WebSecurityConfig {
 	
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.csrf(csrf->csrf.disable())
+		http
+		.cors()
+		.and()
+		.csrf(csrf->csrf.disable())
 			.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedhandler));
 		
 		http.sessionManagement(session -> 
@@ -179,7 +180,18 @@ public class WebSecurityConfig {
         };
 
 	}
+	
+	@Bean
+	public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
+	    org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
+	    configuration.setAllowedOrigins(List.of("http://localhost:4200")); // Angular app origin
+	    configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+	    configuration.setAllowedHeaders(List.of("*"));
+	    configuration.setAllowCredentials(true); // needed if you're sending cookies or Authorization header
 
+	    org.springframework.web.cors.UrlBasedCorsConfigurationSource source = new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
+	    source.registerCorsConfiguration("/**", configuration);
+	    return source;
 	}
 
-
+	}
