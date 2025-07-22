@@ -135,4 +135,17 @@ public ResponseEntity<ApiResponse<?>> displayAllOrder(){
 	}
 }
 
+@GetMapping("/order/{id}")
+@PreAuthorize("hasRole('USER')")
+public ResponseEntity<ApiResponse<?>> getOrderDetails(@PathVariable Long id){
+	try {
+		OrderResponseDetailDTO ans = orderService.displayOrderDetailsUser(id);
+		return ResponseEntity.ok(ApiResponse.success("Successfully Found Order details", ans));
+	}
+	catch(ResponseStatusException e){
+		logger.error("Encountered Response Status Exception : {}",e.getReason());
+		return new ResponseEntity<>(ApiResponse.failure(e.getReason()),e.getStatusCode());
+	}
+}
+
 }
