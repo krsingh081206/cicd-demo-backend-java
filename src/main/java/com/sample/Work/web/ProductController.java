@@ -93,13 +93,10 @@ public class ProductController {
 
 	
 	@PostMapping("/product/search")
-	@PreAuthorize("hasRole('USER','SELLER)")
-	public ResponseEntity<ApiResponse<?>> searchProduct(@RequestParam(required = true) String category,
-	        @RequestParam(required = true) Long minPrice,
-	        @RequestParam(required = true) Long maxPrice){
-		SearchBulkProductRequestDTO dto = new SearchBulkProductRequestDTO(category,minPrice,maxPrice);
+	@PreAuthorize("hasAnyRole('USER','SELLER')")
+	public ResponseEntity<ApiResponse<?>> searchProduct(@RequestBody SearchBulkProductRequestDTO request){
 		try {
-			List<ProductResponseDTO> response = productService.searchProducts(dto);
+			List<ProductResponseDTO> response = productService.searchProducts(request);
 			return ResponseEntity.ok(ApiResponse.success("Successfully found Product", response));
 		}
 		catch(ResponseStatusException e){
